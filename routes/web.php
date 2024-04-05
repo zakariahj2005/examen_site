@@ -24,6 +24,13 @@ Route::controller(PagesController::class)->group(function () {
     Route::get('product/{slug}', 'product')->name('product');
     Route::get('file_name')->name('file_name');
     Route::get('cart', 'cart')->name('cart');
+
+    Route::post('add_to_cart', 'addToCart')->name('add_to_cart');
+    Route::post('delete_cart_item', 'deleteCartItem')->name('delete_cart_item');
+    Route::post('delete_cart', 'deleteCart')->name('delete_cart');
+
+    Route::post('checkout', 'checkout')->name('checkout');
+    Route::get('confirmation/{order_id}', 'confirm')->name('confirmation');
 });
 
 

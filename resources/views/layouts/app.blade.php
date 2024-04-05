@@ -6,6 +6,7 @@
         <meta name="csrf-token" content="{{ csrf_token() }}">
 
         <title>{{ config('app.name', 'Laravel') }}</title>
+        <link href="/styles/style.css" rel="stylesheet" />
 
         <!-- Fonts -->
         <link rel="preconnect" href="https://fonts.bunny.net">
@@ -15,7 +16,7 @@
         @vite(['resources/css/app.css', 'resources/js/app.js'])
     </head>
     <body class="font-sans antialiased">
-        <div class="min-h-screen bg-gray-100">
+        <div class="min-h-screen bg-gray-100 relative">
             @include('layouts.navigation')
 
             <!-- Page Heading -->
@@ -29,11 +30,27 @@
 
             <!-- Page Content -->
             <main>
-                <div class="container mx-auto px-4">
+                <div class="container mx-auto px-4 pb-32">
                     {{ $slot }}
                 </div>
                 
-            </main>
+            </main>              
+
+            <div class="bg-slate-800 py-5 absolute bottom-0 w-full">
+                <div class="container mx-auto px-4 text-white flex justify-around">
+                    <div class="flex-1">
+                        <p class="text-lg">telfoon</p>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-lg">locatie</p>
+                    </div>
+                    <div class="flex-1">
+                        <p class="text-lg">email</p>
+                    </div>
+                </div>
+            </div>
         </div>
+
+        
     </body>
 </html>
