@@ -20,25 +20,16 @@ class PagesController extends Controller
         return view('index', compact('categories'));
     }
 
-    public function categories()
-    {
-        // hier haalt hij alle categories uit database en verstuurd ze naar view categories
-        $categories = Category::all();
-
-        return view('categories', compact('categories'));
-    }
-
-
     public function products($category_slug = null){
     if ($category_slug == null) {
         $category = null;
         $products = Product::all();
-        $categories = Category::all();
     } else {
         $category = Category::where('slug', $category_slug)->first();
         $products = Product::where('category_id', $category->id)->get();
-        $categories = Category::all();
     }
+
+    $categories = Category::all();
 
         return view('products', compact('products', 'categories','category', 'category_slug'));
     }
@@ -46,6 +37,9 @@ class PagesController extends Controller
     public function product($slug)
     {
         $product = Product::where('slug', $slug)->first();
+        if ($product == null) {
+            return redirect()->route('products')->withErrors('Product niet gevonden...');
+        }
         $categories = Category::all();
 
         return view('product', compact('product','categories'));
@@ -80,6 +74,7 @@ class PagesController extends Controller
 
     public function cart()
     {
+        //check of er items in cart zijn
         if (auth()->check() && auth()->user()->cart) {
             $cart = Cart::with('items.product')->where('user_id', auth()->user()->id)->first();
         } else {
@@ -88,6 +83,7 @@ class PagesController extends Controller
 
         $cart_total = 0;
 
+        // bereken totale prijs 
         if ($cart) {
             foreach ($cart->items as $item) {
                 $cart_total = $cart_total + $item->product->price;
@@ -100,6 +96,7 @@ class PagesController extends Controller
 
     public function deleteCartItem()
     {
+        //verwijder item uit cart
         $item = CartItem::find(request('item_id'));
         $item->delete();
 
@@ -108,6 +105,7 @@ class PagesController extends Controller
 
     public function deleteCart()
     {
+        //haal de hele cart leeg
         $cart = Cart::where('user_id', auth()->user()->id)->first();
         $cart->delete();
 
@@ -116,6 +114,7 @@ class PagesController extends Controller
 
     public function checkout(Request $request)
     {
+        //controleer of de gegeven zijn ingevuld
         $validated = $request->validate([
             'address'=> 'required',
             'zip' => 'required',
@@ -123,12 +122,14 @@ class PagesController extends Controller
             'country' => 'required',
         ],
     [
+        //als gegevens niet zijn ingevuld
         'address.required' => 'Adres is verplicht',
         'zip.required' => 'Postcode verplicht',
         'city.required' => 'Plaats is verplicht',
         'country.required' => 'Land is verplicht',
     ]);
 
+        // maakt een order aan. vul het met gegevens van de gebruiker. Sla het op in de database.
         $order = new Order;
         $order->user_id = auth()->user()->id;
         $order->address = request('address');
@@ -136,9 +137,11 @@ class PagesController extends Controller
         $order->city = request('city');
         $order->country_code = request('country');
         $order->save();
-
+        
+        //vind cart voor de bij behorende user id
         $cart = Cart::with('items.product')->where('user_id', auth()->user()->id)->first();
 
+        //maakt een order item aan en stopt info over dat item in.
         foreach ($cart->items as $item) {
             $order_item = new OrderItem;
             $order_item->order_id = $order->id;
