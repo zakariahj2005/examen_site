@@ -14,6 +14,7 @@
 
         <!-- Scripts -->
         @vite(['resources/css/app.css', 'resources/js/app.js'])
+
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100 relative">
@@ -36,18 +37,20 @@
                 
             </main>              
 
-            <div class="bg-slate-800 py-5 absolute bottom-0 w-full">
-                <div class="container mx-auto px-4 text-white flex justify-around">
-                    <div class="flex-1">
-                        <p class="text-lg">telfoon</p>
+            <div class="bg-slate-800 pt-5 absolute bottom-0 w-full">
+                <div class="container mx-auto px-5 text-white flex justify-around">
+                    <div>
+                        <h1 class="mb-3 text-lg">telefoon nummer:</h1>
+                        <p class="mb-2 text-lg">06 34627584</p>
                     </div>
-                    <div class="flex-1">
-                        <p class="text-lg">locatie</p>
+                    <div>
+                        <h1 class="mb-3 text-xl ">Locatie:</h1>
+                        <a class="mb-2 text-lg" href="https://www.google.com/maps/place/Maalderij+37,+1185+ZC+Amstelveen/@52.2880544,4.8362818,16z/data=!3m1!4b1!4m6!3m5!1s0x47c5e03ceaa5f25f:0xc998ef14e952887!8m2!3d52.2880511!4d4.8388567!16s%2Fg%2F11gblf1ps8?entry=ttu" target="_blank">Maalderij 37</a>
                     </div>
-                    <div class="flex-1">
-                        <p class="text-lg">email</p>
+                    <div>
+                        <h1 class="mb-3 text-xl">E-mailadress:</h1>
+                        <p class="mb-2 text-lg">admin@gmail.com</p>
                     </div>
-                </div>
             </div>
         </div>
 

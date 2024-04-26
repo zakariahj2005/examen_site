@@ -18,8 +18,8 @@
                     <x-nav-link :href="route('products')" :active="request()->routeIs('products')">
                         {{ __('producten') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-                        {{ __('Winkelwagen') }}  ({{ auth()->check() && auth()->user()->cart != null ? auth()->user()->cart->items->count() : 0 }})
+                    <x-nav-link :href="route('cart')" :active="request()->routeIs('cart')"> <!-- Als de bezoeker is ingelogd en een winkelwagentje heeft return het het aantal items in het winkelwagen -->
+                        {{ __('Winkelwagen') }} ({{ auth()->check() && auth()->user()->cart != null ? auth()->user()->cart->items->count() : 0 }})
                     </x-nav-link>
                 </div>
             </div>
@@ -41,7 +41,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Profiel') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -51,7 +51,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Log uit') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -59,8 +59,8 @@
             </div>
             @else
             <div class="hidden sm:flex sm:items-center sm:ml-6 space-x-2">
-                <a href="{{ route('login') }}">Inloggen</a>
-                <a href="{{ route('register') }}">Aanmelden</a>
+                <a class="bg-indigo-600 p-2 hover:bg-indigo-700 rounded-md text-white" href="{{ route('login') }}">Inloggen</a>
+                <a class="bg-indigo-600 p-2 hover:bg-indigo-700 rounded-md text-white" href="{{ route('register') }}">Aanmelden</a>
             </div>
             @endauth
 
@@ -86,7 +86,7 @@
                 {{ __('producten') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('cart')" :active="request()->routeIs('cart')">
-                {{ __('Winkelwagen') }}
+                {{ __('Winkelwagen') }} 
             </x-responsive-nav-link>
         </div>
         @auth
@@ -99,7 +99,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Profiel') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->

@@ -19,10 +19,9 @@ use Illuminate\Support\Facades\Route;
 
 Route::controller(PagesController::class)->group(function () {
     Route::get('/', 'index')->name('index');
-    Route::get('categories', 'categories')->name('categories');
     Route::get('products/{category_slug?}', 'products')->name('products');
     Route::get('product/{slug}', 'product')->name('product');
-    Route::get('file_name')->name('file_name');
+    Route::get('file_name')->name('file_name'); 
     Route::get('cart', 'cart')->name('cart');
 
     Route::post('add_to_cart', 'addToCart')->name('add_to_cart');

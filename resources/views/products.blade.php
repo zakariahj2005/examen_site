@@ -1,5 +1,3 @@
-<link rel="stylesheet" href="/styles/style.css">
-
 <x-app-layout>
 <div class="py-4 space-y-4">
     <div class="space-y-4">

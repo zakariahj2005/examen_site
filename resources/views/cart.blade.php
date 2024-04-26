@@ -1,4 +1,5 @@
 <x-app-layout>
+    <!-- bericht wanneer ites succsesvol is -->
     @if ($message = Session::get('success'))
     <div class="bg-green-500 text-center text-white py-2 rounded-md font-bold">
         {!! $message !!}
@@ -9,7 +10,7 @@
         <div class="grid lg:grid-cols-12 gap-4">
             <div class="lg:col-span-8 bg-white rounded-md shadow p-4">
                 <div class="flex justify-end">
-
+                    <!-- dit is een knop voor het verwijderen van de winkelwagen -->
                     <form method="POST" action="{{ route('delete_cart') }}">
                         @csrf
                         <button type="submit" class="text-red-500 font-bold">Winkelwagen verwijderen</button>
@@ -22,6 +23,7 @@
                         <div>
                             <form method="POST" action="{{ route('delete_cart_item') }}">
                                 @csrf
+                                <!-- dit is een knop voor het verwijderen van een item uit deze cart -->
                                 <input type="hidden" name="item_id" value="{{ $item->id }}">
                                 <button type="submit" class="text-red-500">
                                     <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" class="w-4 h-4">
@@ -30,27 +32,29 @@
                                     </button>
                                 </form>     
                         </div>
+                        <!-- vertoont naam, maat en prijs -->
                         <div><span class="font-bold">{{ $item->product->title }}</span> <br> Maat: {{ $item->size }}</div>
                     </div>
                     
                     <div class="text-lg font-bold">prijs: {{ Number::currency($item->product->price, in: 'EUR', locale: 'nl')}}</div>
                 </div>
                 @empty
+                <!-- als er geen winkelwagen is -->
                 <p>Nog geen items...</p>
                 @endforelse
                 </div>
             </div>
             <div class="lg:col-span-4 bg-white rounded-md shadow p-4">
-
+                <!-- totaal prijs -->
                 <div class="grid grid-cols-2 gap-2 py-2">
-                    <div class="text-right">Subtotaal</div>
+                    <div class="text-right">Totaal</div>
                     <div class="text-right font-bold">{{ Number::currency($cart_total, in: 'EUR', locale: 'nl') }}</div>
                 </div>
 
                 <h3 class="font-bold mb-4">Bestellen</h3>
                 <form method="POST" action="{{ route('checkout') }}">
                     @csrf
-
+                    <!-- invul formulier van gegegevens en knop voor confirm page -->
                     <div class="mb-3">
                         <span class="block text-sm font-semibold">Adres<span class="text-red-500">*</span></span>
                         <input type="text" class="w-full rounded" name="address" value="{{ old('address') }}">

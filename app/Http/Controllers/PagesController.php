@@ -21,25 +21,25 @@ class PagesController extends Controller
     }
 
     public function products($category_slug = null){
+        // als er geen slug is mee gegeven haal alle producten op en vertoond ze in de view products
     if ($category_slug == null) {
         $category = null;
         $products = Product::all();
     } else {
+        // als er een slug is mee gegeven haal alle producten van de eerste slug
         $category = Category::where('slug', $category_slug)->first();
         $products = Product::where('category_id', $category->id)->get();
     }
-
+    // vertoond de rest van de categorien 
     $categories = Category::all();
 
         return view('products', compact('products', 'categories','category', 'category_slug'));
     }
 
     public function product($slug)
-    {
+    {   
+        //haalt de product op met de mee gegeven slug
         $product = Product::where('slug', $slug)->first();
-        if ($product == null) {
-            return redirect()->route('products')->withErrors('Product niet gevonden...');
-        }
         $categories = Category::all();
 
         return view('product', compact('product','categories'));
@@ -47,6 +47,7 @@ class PagesController extends Controller
 
     public function addToCart(Request $request)
     {
+        //verplicht in te vullen
         $validated = $request->validate([
             'size'=> 'required',
         ]);
@@ -93,7 +94,7 @@ class PagesController extends Controller
         
         return view('cart', compact('cart', 'cart_total'));
     }
-
+    
     public function deleteCartItem()
     {
         //verwijder item uit cart
